@@ -15,13 +15,13 @@
 
             <a class="title"><b>rtxdiv</b> prod.</a>
 
-            @if (Model.ShowRequests == true) {
+            @if (Model.Layout.ShowRequests == true) {
 
                 <div class="requests">
 
                     <div class="button">Мои запросы</div>
 
-                    @if (Model.ShowNotification == true) {
+                    @if (Model.Layout.ShowNotification == true) {
                         <div class="notification">UPD</div>
                     }
                 </div>

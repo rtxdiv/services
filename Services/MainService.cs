@@ -1,0 +1,4 @@
+public class MainService : IMainService
+{
+
+}

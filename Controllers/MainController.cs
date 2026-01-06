@@ -14,13 +14,13 @@ namespace aspnet1.Controllers
 
             var model = new MainPageViewModel {
                 Time = DateTime.Now.ToString("HH:mm:ss dd.MM.yyyy"),
-                ShowRequests = true,
-                ShowNotification = true
+                Layout = {
+                    ShowRequests = true,
+                    ShowNotification = true
+                }
             };
-            // создание экземпляра модели для VIEW
 
             return View(model);
-            // создание View с моделью и возврат готового
         }
     }
 }

@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// сервисы
+builder.Services.AddSingleton<IMainService, MainService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
