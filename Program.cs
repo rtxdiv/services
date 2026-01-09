@@ -1,6 +1,6 @@
-using aspnet1.Entity;
-using aspnet1.Services;
-using aspnet1.Services.Interfaces;
+using services.Entity;
+using services.Services;
+using services.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,13 +21,6 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
-
-app.Use(async (context, next) => {
-    await next();
-    if (context.Response.StatusCode == 404) {
-        context.Response.Redirect("/");
-    }
-});
 
 app.MapControllerRoute(
     name: "default",

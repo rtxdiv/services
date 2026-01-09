@@ -1,5 +1,5 @@
-﻿@using aspnet1.Entity
-@model aspnet1.Models.ViewModels.HomeModel
+﻿@using services.Entity
+@model services.Models.ViewModels.HomeModel
 @{
 	Layout = "~/Views/Layouts/BaseLayout.cshtml";
 }
@@ -22,10 +22,9 @@
 				<p class="text">@service.Description</p>
 
 				@if (Model.Admin == false) {
-					<form class="control-user" method="post" action="/order">
-						<input type="text" value="@service.Id" name="id" readonly />
-						<button type="submit">Заказать</button>
-					</form>
+					<button onclick="window.location.href='/order/@service.Id'">
+						Заказать
+					</button>
 				}
 			</div>
 

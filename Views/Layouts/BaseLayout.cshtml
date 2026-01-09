@@ -1,4 +1,4 @@
-﻿@model aspnet1.Models.ViewModels.BaseLayoutModel
+﻿@model services.Models.ViewModels.BaseLayoutModel
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -18,7 +18,7 @@
 
             @if (Model.Layout.ShowRequests == true) {
 
-                <div class="requests" onclick="goToRequests()">
+                <div class="requests" onclick="window.location.href='/requests'">
                     <div class="button">Мои запросы</div>
                     @if (Model.Layout.ShowNotification == true) {
                         <div class="notification">UPD</div>
@@ -33,6 +33,5 @@
         @RenderBody()
     </div>
 
-    <script src="~/js/layout/base.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace aspnet1.Entity;
+namespace services.Entity;
 
 public partial class Service
 {

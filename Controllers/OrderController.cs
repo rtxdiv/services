@@ -1,20 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
-using aspnet1.Models.Dto;
-using aspnet1.Entity;
-using aspnet1.Services.Interfaces;
-using aspnet1.Models.ViewModels;
+using services.Models.ViewModels;
+using services.Entity;
+using services.Services.Interfaces;
 
-namespace aspnet1.Controllers
+namespace services.Controllers
 {
     [Route("order")]
     public class OrderController(IOrderService orderService) : Controller
     {
-        [HttpPost]
-        public async Task<IActionResult> Order(OrderDto dto)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Order(int id)
         {
+            Service service = await orderService.GetService(id);
+            if (service == null) return NotFound();
+
             OrderModel model = new()
             {
-                Service = await orderService.GetService(dto.Id)
+                Service = service
             };
 
             return View(model);

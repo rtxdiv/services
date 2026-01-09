@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace aspnet1.Entity;
+namespace services.Entity;
 
 public partial class AppDbContext : DbContext
 {

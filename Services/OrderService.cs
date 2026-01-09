@@ -1,8 +1,8 @@
-using aspnet1.Entity;
-using aspnet1.Services.Interfaces;
+using services.Entity;
+using services.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace aspnet1.Services
+namespace services.Services
 {
     public class OrderService(AppDbContext db) : IOrderService
     {

@@ -1,6 +1,6 @@
-using aspnet1.Entity;
+using services.Entity;
 
-namespace aspnet1.Models.ViewModels
+namespace services.Models.ViewModels
 {
     public class OrderModel
     {

@@ -45,7 +45,7 @@
                 font-size: 16px;
                 margin: 7px 0;
             }
-            .control-user button {
+            button {
                 margin-top: 15px;
                 background: rgb(0, 132, 255);
                 color: white;
@@ -61,10 +61,7 @@
                 cursor: pointer;
                 transition: 0.2s;
             }
-            .control-user input {
-                display: none;
-            }
-            .control-user button:hover {
+            button:hover {
                 transform: translateY(-2px);
             }
         }

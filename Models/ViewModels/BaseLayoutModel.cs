@@ -1,4 +1,4 @@
-namespace aspnet1.Models.ViewModels
+namespace services.Models.ViewModels
 {
     public abstract class BaseLayoutModel
     {

@@ -1,6 +1,6 @@
-using aspnet1.Entity;
+using services.Entity;
 
-namespace aspnet1.Services.Interfaces
+namespace services.Services.Interfaces
 {
     public interface IOrderService
     {

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using aspnet1.Models.ViewModels;
-using aspnet1.Services.Interfaces;
+using services.Models.ViewModels;
+using services.Services.Interfaces;
 
-namespace aspnet1.Controllers
+namespace services.Controllers
 {
     [Route("requests")]
     public class RequestsController(IRequestsService requestsService) : Controller

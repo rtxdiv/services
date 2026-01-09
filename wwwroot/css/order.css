@@ -30,7 +30,7 @@
 form {
     width: 100%;
 
-    .service-name {
+    .service-id {
         display: none;
     }
 
@@ -43,7 +43,7 @@ form {
             font-size: 17px;
             font-weight: 500;
             margin: 0;
-            margin-bottom: 7px;
+            margin-bottom: 2px;
         }
 
         textarea {
@@ -53,6 +53,11 @@ form {
         input {
             height: 40px;
             padding: 10px;
+        }
+
+        .error {
+            color: red;
+            font-size: 15px;
         }
     }
 
@@ -65,10 +70,10 @@ form {
         border: 1px rgb(50, 50, 50) solid;
         font-size: 15px;
         background: rgb(245, 245, 245);
+        margin-top: 5px;
     }
 
     button {
-        margin-top: 5px;
         height: 40px;
         width: 180px;
         max-width: 100%;
