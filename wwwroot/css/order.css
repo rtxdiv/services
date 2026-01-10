@@ -27,7 +27,7 @@
     }
 }
 
-form {
+.form {
     width: 100%;
 
     .service-id {
@@ -54,13 +54,13 @@ form {
             height: 40px;
             padding: 10px;
         }
-
-        .error {
-            color: red;
-            font-size: 15px;
-        }
     }
 
+    .error {
+        color: red;
+        font-size: 15px;
+    }
+    
     .row textarea, .row input, button {
         outline: none;
         box-sizing: border-box;

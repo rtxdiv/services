@@ -9,10 +9,10 @@ namespace services.Services
         public async Task<List<Request>> GetRequests(string? userId, bool isAdmin)
         {
             if (isAdmin) {
-                return await db.Requests.ToListAsync();
+                return await db.Requests.OrderByDescending(e => e.CreatedAt).ToListAsync();
 
             } else {
-                return await db.Requests.Where(e => e.UserId == userId).ToListAsync();
+                return await db.Requests.Where(e => e.UserId == userId).OrderByDescending(e => e.CreatedAt).ToListAsync();
             }
         }
     }

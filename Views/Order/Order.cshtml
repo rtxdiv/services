@@ -15,20 +15,25 @@
     <p class="requirements">@Model.Service.Requirements</p>
 </div>
 
-<form>
-    <input class="service-id" value="@Model.Service.Id" readonly />
+<div class="form">
+
+    <div class="error" data-error="All"></div>
 
     <div class="row">
         <p>Опишите заказ</p>
-        <span class="error"></span>
-        <textarea placeholder="Пожалуйста, придерживайтесь указанного шаблона"></textarea>
+        <div class="error" data-error="Query"></div>
+        <textarea placeholder="Пожалуйста, придерживайтесь указанного шаблона" id="queryInp"></textarea>
     </div>
 
     <div class="row">
         <p>Как с вами связаться</p>
-        <span class="error"></span>
-        <input placeholder="Например, Telegram &#64;rtxdiv_production">
+        <div class="error" data-error="Contact"></div>
+        <input placeholder="Например, Telegram &#64;rtxdiv_production" id="contactInp">
     </div>
 
-    <button type="submit">Отправить</button>
-</form>
+    <button onclick="sendForm()">Отправить</button>
+</div>
+
+@section Scripts {
+    <script src="~/js/order.js"></script>
+}

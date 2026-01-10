@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Title🤯</title>
     <link href="~/css/layout/base.css" rel="stylesheet" />
-    @RenderSection("Styles", required: false)
+    @RenderSection(name: "Styles", required: false)
 </head>
 <body>
 
@@ -32,6 +32,8 @@
     <div class="container">
         @RenderBody()
     </div>
+
+    @RenderSection(name: "Scripts", required: false)
 
 </body>
 </html>

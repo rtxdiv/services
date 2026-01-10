@@ -1,6 +1,7 @@
 using services.Entity;
 using services.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using services.Models.DtoModels;
 
 namespace services.Services
 {
@@ -11,9 +12,17 @@ namespace services.Services
             return await db.Services.Where(e => e.Id == id).FirstAsync();
         }
 
-        public async Task SaveOrder(Request request)
+        public async Task SaveOrder(string userId, OrderSendDto dto)
         {
-            throw new Exception();
+            Service service = await db.Services.Where(e => e.Id == dto.ServiceId).FirstAsync() ?? throw new Exception("Услуга не найдена");
+            Request request = new() {
+                UserId = userId,
+                ServiceName = service.Name,
+                Query = dto.Query,
+                Contact = dto.Contact
+            };
+            db.Requests.Add(request);
+            await db.SaveChangesAsync();
         }
     }
 }

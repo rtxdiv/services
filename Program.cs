@@ -13,6 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connecti
 builder.Services.AddScoped<IRootService, RootService>();
 builder.Services.AddScoped<IRequestsService, RequestsService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // контроллеры
 builder.Services.AddControllersWithViews();
