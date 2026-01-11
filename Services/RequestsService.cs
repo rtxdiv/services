@@ -15,5 +15,27 @@ namespace services.Services
                 return await db.Requests.Where(e => e.UserId == userId).OrderByDescending(e => e.CreatedAt).ToListAsync();
             }
         }
+
+        public async Task<Request?> AcceptRequest(int requestId)
+        {
+            Request? request = await db.Requests.FindAsync(requestId);
+            if (request == null) return null;
+
+            request.Status = true;
+            request.StatusText = "Одобрено";
+            await db.SaveChangesAsync();
+            return request;
+        }
+
+        public async Task<Request?> RejectRequest(int requestId)
+        {
+            Request? request = await db.Requests.FindAsync(requestId);
+            if (request == null) return null;
+
+            request.Status = false;
+            request.StatusText = "Отклонено";
+            await db.SaveChangesAsync();
+            return request;
+        }
     }
 }

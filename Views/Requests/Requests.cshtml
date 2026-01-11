@@ -23,11 +23,11 @@
 
                 <div class="info">
                     @if (request.Status == true) {
-                        <div class="status accepted">Одобрено</div>
+                        <div class="status accepted">@request.StatusText</div>
                     } else if (request.Status == false) {
-                        <div class="status rejected">Отклонено</div>
+                        <div class="status rejected">@request.StatusText</div>
                     } else {
-                        <div class="status">Ожидание ответа</div>
+                        <div class="status waiting">@request.StatusText</div>
                     }
                     <div class="date">@request.CreatedAt.ToString(format: "O")</div>
                 </div>
@@ -36,8 +36,16 @@
 
             @if (Model.Admin == true) {
                 <div class="control-admin">
-                    <button>Accept</button>
-                    <button>Reject</button>
+                    @if (request.Status == false) {
+                        <button class="acceptBtn visible" onclick="accept(this, @request.Id)">Одобрить</button>
+                        <button class="rejectBtn" onclick="reject(this, @request.Id)">Отклонить</button>
+                    } else if (request.Status == true) {
+                        <button class="acceptBtn" onclick="accept(this, @request.Id)">Одобрить</button>
+                        <button class="rejectBtn visible" onclick="reject(this, @request.Id)">Отклонить</button>
+                    } else {
+                        <button class="acceptBtn visible" onclick="accept(this, @request.Id)">Одобрить</button>
+                        <button class="rejectBtn visible" onclick="reject(this, @request.Id)">Отклонить</button>
+                    }
                 </div>
             }
 

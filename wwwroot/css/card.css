@@ -69,10 +69,11 @@
         .info {
             display: flex;
             flex-direction: row;
-            font-size: 16px;
+            font-size: 15px;
             margin-top: 10px;
             justify-content: space-between;
             flex-wrap: wrap;
+            align-items: center;
 
             .status {
                 color: rgb(150, 150, 150);
@@ -91,10 +92,16 @@
     .control-admin {
         display: flex;
         flex-direction: row;
-        height: 35px;
+        height: 0;
         box-sizing: border-box;
+        transition: 0.2s;
+
+        > .visible {
+            display: block;
+        }
 
         > button {
+            display: none;
             flex-grow: 1;
             height: 100%;
             border-radius: 0;
@@ -105,11 +112,26 @@
             border-top: 1px rgb(150, 150, 150) solid;
             border-right: 1px rgb(150, 150, 150) solid;
             cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        > button:last-of-type {
-            border-right: none;
+        > .visible:not(:has(~ .visible)) {
+            border-right: none !important;
         }
+
+        .acceptBtn {
+            color: rgb(102, 190, 102);
+        }
+        .rejectBtn {
+            color: rgb(233, 58, 58);
+        }
+    }
+}
+
+.card:hover {
+    .control-admin {
+        height: 32px;
     }
 }
 

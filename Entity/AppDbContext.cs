@@ -46,6 +46,9 @@ public partial class AppDbContext : DbContext
                 .HasColumnType("text")
                 .HasColumnName("service_name");
             entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.StatusText)
+                .HasColumnType("text")
+                .HasColumnName("status_text");
             entity.Property(e => e.UserId)
                 .HasColumnType("text")
                 .HasColumnName("user_id");

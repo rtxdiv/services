@@ -19,7 +19,8 @@ namespace services.Services
                 UserId = userId,
                 ServiceName = service.Name,
                 Query = dto.Query,
-                Contact = dto.Contact
+                Contact = dto.Contact,
+                StatusText = "В ожидании"
             };
             db.Requests.Add(request);
             await db.SaveChangesAsync();

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using services.Entity;
+using services.Models.DtoModels;
 using services.Models.ViewModels;
 using services.Services.Interfaces;
 
@@ -11,7 +12,7 @@ namespace services.Controllers
         [HttpGet]
         public async Task<IActionResult> Requests()
         {
-            bool isAdmin = false;
+            bool isAdmin = true;
             List<Request> requests = [];
 
             if (Request.Cookies.TryGetValue("user_id", out string? userId)) {
@@ -33,6 +34,28 @@ namespace services.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost("/accept")]
+        public async Task<IActionResult> AcceptRequest([FromBody] AcceptRequestDto body)
+        {
+            Request? request = await requestsService.AcceptRequest(body.RequestId);
+            if (request == null) return NotFound();
+            return Ok(new {
+                status = request.Status,
+                text = request.StatusText
+            });
+        }
+
+        [HttpPost("/reject")]
+        public async Task<IActionResult> RejectRequest([FromBody] AcceptRequestDto body)
+        {
+            Request? request = await requestsService.RejectRequest(body.RequestId);
+            if (request == null) return NotFound();
+            return Ok(new {
+                status = request.Status,
+                text = request.StatusText
+            });
         }
     }
 }

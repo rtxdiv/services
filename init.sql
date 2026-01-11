@@ -17,6 +17,7 @@ CREATE TABLE `requests` (
     `contact` TEXT NOT NULL,
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `status` BOOLEAN NULL DEFAULT NULL,
+    `status_text` TEXT NOT NULL,
     `user_noti` BOOLEAN NOT NULL DEFAULT false,
     `admin_noti` BOOLEAN NOT NULL DEFAULT true,
     PRIMARY KEY (`id`)
