@@ -17,9 +17,21 @@
 
         <div class="body">
 
-            <div class="body-content">
+            <div class="body-content no-image">
                 <p class="title">@request.ServiceName</p>
                 <p class="text">@request.Query</p>
+
+                <div class="info">
+                    @if (request.Status == true) {
+                        <div class="status accepted">Одобрено</div>
+                    } else if (request.Status == false) {
+                        <div class="status rejected">Отклонено</div>
+                    } else {
+                        <div class="status">Ожидание ответа</div>
+                    }
+                    <div class="date">@request.CreatedAt.ToString(format: "O")</div>
+                </div>
+
             </div>
 
             @if (Model.Admin == true) {
@@ -32,4 +44,8 @@
         </div>
 
     </div>
+}
+
+@section Scripts {
+    <script src="~/js/requests.js"></script>
 }

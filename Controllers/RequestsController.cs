@@ -6,11 +6,7 @@ using services.Services.Interfaces;
 namespace services.Controllers
 {
     [Route("requests")]
-    public class RequestsController(
-        IRequestsService requestsService,
-        IAuthService authService
-
-    ) : Controller
+    public class RequestsController(IRequestsService requestsService) : Controller
     {
         [HttpGet]
         public async Task<IActionResult> Requests()

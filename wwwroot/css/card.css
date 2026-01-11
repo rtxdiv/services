@@ -65,6 +65,27 @@
                 transform: translateY(-2px);
             }
         }
+
+        .info {
+            display: flex;
+            flex-direction: row;
+            font-size: 16px;
+            margin-top: 10px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            .status {
+                color: rgb(150, 150, 150);
+                font-weight: 500;
+            }
+
+            .accepted {
+                color: rgb(15, 192, 12) !important;
+            }
+            .rejected {
+                color: rgb(255, 80, 80) !important;
+            }
+        }
     }
 
     .control-admin {
@@ -113,7 +134,7 @@
         z-index: 2;
         background: linear-gradient(to right, rgb(245, 245, 245) 0%, rgba(0, 0, 0, 0) 100%);
     }
-    .body-content {
+    .body-content:not(.no-image) {
         padding-right: 200px !important;
     }
 }

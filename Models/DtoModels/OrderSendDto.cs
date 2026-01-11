@@ -7,7 +7,8 @@ namespace services.Models.DtoModels
         [Required]
         public required int ServiceId { get; set; }
 
-        [MinLength(30, ErrorMessage = "Используйте минимум 30 символов")]
+        [MinLength(100, ErrorMessage = "Используйте минимум 100 символов")]
+        [MaxLength(2000, ErrorMessage = "Используйте не более 2000 символов")]
         public required string Query { get; set; }
 
         [MinLength(1, ErrorMessage = "Укажите ваши контакты")]

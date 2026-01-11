@@ -54,13 +54,28 @@
             height: 40px;
             padding: 10px;
         }
+
+        #queryLength {
+            width: 100%;
+            text-align: end;
+            font-size: 13px;
+            color: rgb(70, 70, 70);
+            margin-top: 1px;
+        }
+
+        .length-error {
+            color: red !important;
+        }
+        .input-error::placeholder {
+            color: red;
+        }
     }
 
     .error {
         color: red;
         font-size: 15px;
     }
-    
+
     .row textarea, .row input, button {
         outline: none;
         box-sizing: border-box;
