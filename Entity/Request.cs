@@ -21,7 +21,7 @@ public partial class Request
 
     public string StatusText { get; set; } = null!;
 
-    public bool UserNoti { get; set; }
+    public bool UserNoti { get; set; } = false;
 
-    public bool? AdminNoti { get; set; }
+    public bool AdminNoti { get; set; } = true;
 }

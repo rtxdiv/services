@@ -5,7 +5,7 @@ namespace services.Services.Interfaces
 {
     public interface IOrderService
     {
-        Task<Service> GetService(int id);
-        Task SaveOrder(string userId, OrderSendDto request);
+        Task<Service?> GetService(int id);
+        Task<Request?> SaveOrder(string userId, OrderSendDto request);
     }
 }

@@ -10,5 +10,25 @@ namespace services.Services
         {
             return await db.Services.ToListAsync();
         }
+
+        public async Task<Service?> ChangeVisibility(int id)
+        {
+            Service? service = await db.Services.Where(e => e.Id == id).FirstAsync();
+            if (service == null) return null;
+
+            service.Visible = !service.Visible;
+            await db.SaveChangesAsync();
+            return service;
+        }
+
+        public async Task<Service?> DeleteService(int id)
+        {
+            Service? service = await db.Services.Where(e => e.Id == id).FirstAsync();
+            if (service == null) return null;
+
+            db.Services.Remove(service);
+            await db.SaveChangesAsync();
+            return service;
+        }
     }
 }

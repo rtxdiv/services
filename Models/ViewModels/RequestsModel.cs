@@ -6,5 +6,7 @@ namespace services.Models.ViewModels
     {
         public List<Request> Requests { get; set; } = [];
         public bool Admin { get; set; } = false;
+        public required string Status { get; set; }
+        public required int RequestsCount { get; set; }
     }
 }

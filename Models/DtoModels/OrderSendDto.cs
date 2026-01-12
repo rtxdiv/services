@@ -4,7 +4,7 @@ namespace services.Models.DtoModels
 {
     public class OrderSendDto
     {
-        [Required]
+        [Required(ErrorMessage = "Не указан Id услуги")]
         public required int ServiceId { get; set; }
 
         [MinLength(100, ErrorMessage = "Используйте минимум 100 символов")]

@@ -1,3 +1,4 @@
+@using System.Diagnostics
 @using services.Entity
 @model services.Models.ViewModels.RequestsModel
 @{
@@ -9,10 +10,24 @@
     <link href="~/css/requests.css" rel="stylesheet" />
 }
 
-@if (Model.Requests.Count == 0) {
+@if (Model.RequestsCount == 0) {
     <img class="norequests" src="~/img/norequests.png" />
+
+} else {
+
+    <div class="sort">
+        <a href="/requests/all" class="@(Model.Status == "all" ? "active" : null)">Все (@Model.Requests.Count())</a>
+        <a href="/requests/waiting" class="@(Model.Status == "waiting" ? "active" : null)">Ожадание ответа (@Model.Requests.Count(r => r.Status == null))</a>
+        <a href="/requests/accepted" class="@(Model.Status == "accepted" ? "active" : null)">Одобреные (@Model.Requests.Count(r => r.Status == true))</a>
+        <a href="/requests/rejected" class="@(Model.Status == "rejected" ? "active" : null)">Отклонённые (@Model.Requests.Count(r => r.Status == false))</a>
+    </div>
 }
-@foreach (Request request in Model.Requests) {
+
+@foreach (Request request in Model.Requests.Where(r =>
+    Model.Status == "waiting" ? r.Status == null :
+    Model.Status == "accepted" ? r.Status == true :
+    Model.Status == "rejected" ? r.Status == false : true
+)) {
     <div class="card">
 
         <div class="body">

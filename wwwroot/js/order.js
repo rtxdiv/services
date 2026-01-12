@@ -52,8 +52,10 @@ function displayErrors(errors) {
     errorElems = []
     Object.entries(errors).forEach(([key, value]) => {
         const elem = document.querySelector(`[data-error="${key}"]`)
-        errorElems.push(elem)
-        elem.textContent = value[0]
+        if (elem) {
+            errorElems.push(elem)
+            elem.textContent = value[0]
+        }
     })
 }
 

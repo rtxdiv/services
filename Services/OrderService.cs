@@ -7,14 +7,18 @@ namespace services.Services
 {
     public class OrderService(AppDbContext db) : IOrderService
     {
-        public async Task<Service> GetService(int id)
+        public async Task<Service?> GetService(int id)
         {
-            return await db.Services.Where(e => e.Id == id).FirstAsync();
+            Service service = await db.Services.Where(e => e.Id == id).FirstAsync();
+            if (service == null) return null;
+            return service;
         }
 
-        public async Task SaveOrder(string userId, OrderSendDto dto)
+        public async Task<Request?> SaveOrder(string userId, OrderSendDto dto)
         {
-            Service service = await db.Services.Where(e => e.Id == dto.ServiceId).FirstAsync() ?? throw new Exception("Услуга не найдена");
+            Service service = await db.Services.Where(e => e.Id == dto.ServiceId).FirstAsync();
+            if (service == null) return null;
+
             Request request = new() {
                 UserId = userId,
                 ServiceName = service.Name,
@@ -24,6 +28,8 @@ namespace services.Services
             };
             db.Requests.Add(request);
             await db.SaveChangesAsync();
+
+            return request;
         }
     }
 }

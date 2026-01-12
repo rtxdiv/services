@@ -7,30 +7,33 @@ using services.Services.Interfaces;
 namespace services.Controllers
 {
     [Route("requests")]
-    public class RequestsController(IRequestsService requestsService) : Controller
+    public class RequestsController(
+        IRequestsService requestsService,
+        IAuthService authService
+
+    ) : Controller
     {
         [HttpGet]
-        public async Task<IActionResult> Requests()
+        [HttpGet("{status}")]
+        public async Task<IActionResult> Requests(string status)
         {
+            if (!(status == "accepted" || status == "rejected" || status == "waiting" || status == "all")) {
+                return Redirect("/requests/all");
+            }
             bool isAdmin = true;
             List<Request> requests = [];
 
-            if (Request.Cookies.TryGetValue("user_id", out string? userId)) {
-                requests = await requestsService.GetRequests(userId, isAdmin);
-                if (requests.Count == 0) {
-                    Response.Cookies.Delete("user_id");
-                } else {
-                    Response.Cookies.Append("user_id", userId, new CookieOptions {
-                        Expires = DateTime.Now.AddDays(100),
-                        HttpOnly = true
-                    });
-                }
+            Validation validation = await authService.ValidateUser(HttpContext);
+            if (validation.Valide == true) {
+                requests = await requestsService.GetRequests(validation.UserId, isAdmin);
             }
 
             RequestsModel model = new()
             {
                 Requests = requests,
-                Admin = isAdmin
+                Admin = isAdmin,
+                Status = status,
+                RequestsCount = validation.RequestsCount
             };
 
             return View(model);
@@ -39,8 +42,12 @@ namespace services.Controllers
         [HttpPost("/accept")]
         public async Task<IActionResult> AcceptRequest([FromBody] AcceptRequestDto body)
         {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
             Request? request = await requestsService.AcceptRequest(body.RequestId);
-            if (request == null) return NotFound();
+            if (request == null) return NotFound("Запрос не найден");
             return Ok(new {
                 status = request.Status,
                 text = request.StatusText
@@ -50,8 +57,12 @@ namespace services.Controllers
         [HttpPost("/reject")]
         public async Task<IActionResult> RejectRequest([FromBody] AcceptRequestDto body)
         {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
             Request? request = await requestsService.RejectRequest(body.RequestId);
-            if (request == null) return NotFound();
+            if (request == null) return NotFound("Запрос не найден");
             return Ok(new {
                 status = request.Status,
                 text = request.StatusText

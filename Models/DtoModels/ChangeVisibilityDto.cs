@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace services.Models.DtoModels
 {
-    public class AcceptRequestDto
+    public class ChangeVisibilityDto
     {
         [Required(ErrorMessage = "Не указан Id услуги")]
-        public required int RequestId { get; set; }
+        public required int ServiceId { get; set; }
     }
 }

@@ -94,7 +94,7 @@
         max-width: 100%;
         cursor: pointer;
         color: white;
-        background: rgb(0, 132, 255);
+        background: linear-gradient(to right top, rgb(0, 94, 255), rgb(23, 143, 255));
         border: 2px rgb(0, 118, 227) solid;
         font-size: 16px;
         transition: 0.2s;

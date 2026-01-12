@@ -9,12 +9,12 @@
 }
 
 @foreach (Service service in Model.Services) {
-	<div class="card">
+	<div class="@(service.Visible ? "card" : "card unvis-card")">
 
 		<div class="body">
 
 			<div class="imagebox">
-				<img src="~/img/services/@service.Image" />
+				<img src="/img/services/@service.Image" />
 			</div>
 
 			<div class="body-content">
@@ -32,11 +32,15 @@
 
 		@if (Model.Admin == true) {
 			<div class="control-admin">
-				<button>Visible</button>
-				<button>Edit</button>
-				<button>Delete</button>
+				<button class="visible" onclick="changeVisibility(this, @service.Id)"><img src="@("/img/" + (service.Visible ? "visible.png" : "unvisible.png"))" /></button>
+				<button class="visible" onclick="window.location.href='/service/@service.Id'">Изменить</button>
+				<button class="visible removeBtn" onclick="deleteService(this, @service.Id)">Удалить</button>
 			</div>
 		}
 
 	</div>
+}
+
+@section Scripts {
+	<script src="~/js/home.js"></script>
 }

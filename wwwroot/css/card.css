@@ -1,3 +1,7 @@
+.unvis-card {
+    opacity: 0.5 !important;
+}
+
 .card {
     width: 100%;
     display: flex;
@@ -47,7 +51,7 @@
             }
             button {
                 margin-top: 15px;
-                background: rgb(0, 132, 255);
+                background: linear-gradient(to right top, rgb(0, 94, 255), rgb(23, 143, 255));
                 color: white;
                 outline: none;
                 border: 2px rgb(0, 118, 227) solid;
@@ -92,9 +96,10 @@
     .control-admin {
         display: flex;
         flex-direction: row;
-        height: 0;
+        height: 0px;
         box-sizing: border-box;
         transition: 0.2s;
+        transition-delay: 0.1s;
 
         > .visible {
             display: block;
@@ -114,6 +119,11 @@
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
+
+            > img {
+                height: 100%;
+                max-height: 100%;
+            }
         }
 
         > .visible:not(:has(~ .visible)) {
@@ -124,6 +134,9 @@
             color: rgb(102, 190, 102);
         }
         .rejectBtn {
+            color: rgb(233, 58, 58);
+        }
+        .removeBtn {
             color: rgb(233, 58, 58);
         }
     }

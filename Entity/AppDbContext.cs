@@ -28,10 +28,6 @@ public partial class AppDbContext : DbContext
             entity.ToTable("requests");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.AdminNoti)
-                .IsRequired()
-                .HasDefaultValueSql("'1'")
-                .HasColumnName("admin_noti");
             entity.Property(e => e.Contact)
                 .HasColumnType("text")
                 .HasColumnName("contact");
@@ -52,7 +48,16 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.UserId)
                 .HasColumnType("text")
                 .HasColumnName("user_id");
-            entity.Property(e => e.UserNoti).HasColumnName("user_noti");
+            entity.Property(e => e.AdminNoti)
+                .IsRequired()
+                .HasDefaultValueSql("'1'")
+                .HasSentinel(true)
+                .HasColumnName("admin_noti");
+            entity.Property(e => e.UserNoti)
+                .IsRequired()
+                .HasSentinel(false)
+                .HasDefaultValueSql("'1'")
+                .HasColumnName("user_noti");
         });
 
         modelBuilder.Entity<Service>(entity =>
@@ -77,6 +82,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Visible)
                 .IsRequired()
                 .HasDefaultValueSql("'1'")
+                .HasSentinel(true)
                 .HasColumnName("visible");
         });
 

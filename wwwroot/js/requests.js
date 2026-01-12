@@ -4,6 +4,10 @@ Array.from(document.querySelectorAll('.card')).forEach(card => {
     dateElem.textContent = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`
 })
 
+function selected(elem) {
+    window.location.href = `/requests/${elem.value}`
+}
+
 async function accept(elem, id) {
     const resp = await fetch('/accept', {
         method: 'POST',
@@ -14,10 +18,6 @@ async function accept(elem, id) {
             requestId: id
         })
     })
-
-    if (resp.status == 404) {
-        return document.removeChi
-    }
 
     if (resp.ok) {
         const body = await resp.json()

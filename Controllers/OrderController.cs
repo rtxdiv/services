@@ -16,8 +16,8 @@ namespace services.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Order(int id)
         {
-            Service service = await orderService.GetService(id);
-            if (service == null) return NotFound();
+            Service? service = await orderService.GetService(id);
+            if (service == null) return NotFound("Услуга не найдена");
 
             OrderModel model = new()
             {
@@ -30,23 +30,15 @@ namespace services.Controllers
         [HttpPost("/send")]
         public async Task<IActionResult> Send([FromBody] OrderSendDto body)
         {
-            if (Request.Cookies.TryGetValue("user_id", out string? userId)) {
-                if (!await authService.ValidateUserId(userId)) {
-                    userId = Guid.NewGuid().ToString();
-                }
-            } else {
-                userId = Guid.NewGuid().ToString();
-            }
-
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            await orderService.SaveOrder(userId, body);
 
-            Response.Cookies.Append("user_id", userId, new CookieOptions {
-                Expires = DateTime.Now.AddDays(100),
-                HttpOnly = true
-            });
+            Validation validation = await authService.ValidateUser(HttpContext, new VParams { NewId = true });
+
+            Request? request = await orderService.SaveOrder(validation.UserId ?? throw new Exception(), body);
+            if (request == null) return NotFound("Услуга не найдена");
+
             return Redirect("/requests");
         }
     }
