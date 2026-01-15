@@ -33,7 +33,7 @@
 		@if (Model.Admin == true) {
 			<div class="control-admin">
 				<button class="visible" onclick="changeVisibility(this, @service.Id)"><img src="@("/img/" + (service.Visible ? "visible.png" : "unvisible.png"))" /></button>
-				<button class="visible" onclick="window.location.href='/service/@service.Id'">Изменить</button>
+				<button class="visible" onclick="window.location.href='/editor/@service.Id'">Изменить</button>
 				<button class="visible removeBtn" onclick="deleteService(this, @service.Id)">Удалить</button>
 			</div>
 		}

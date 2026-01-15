@@ -1,23 +1,13 @@
 const queryInp = document.querySelector('#queryInp')
 const contactInp = document.querySelector('#contactInp')
 const queryLength = document.querySelector('#queryLength')
+const serviceId = document.querySelector('#serviceId')
 
 const queryMin = 100
 const queryMax = 2000
 
 async function sendForm() {
-    let error = false
-    if (queryInp.value.length < queryMin || queryInp.value.length > queryMax) error = true
-    if (queryInp.value.length == 0) {
-        queryInp.classList.add('input-error')
-        error = true
-    }
-    if (contactInp.value.length == 0) {
-        contactInp.classList.add('input-error')
-        error = true
-    }
-
-    if (error) return
+    if (checkValues()) return
 
     const resp = await fetch('/send', {
         method: 'POST',
@@ -25,7 +15,7 @@ async function sendForm() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            serviceId: window.location.pathname.split('/').at(-1),
+            serviceId: parseInt(serviceId.value),
             query: queryInp.value,
             contact: contactInp.value
         })
@@ -42,6 +32,20 @@ async function sendForm() {
         }
         document.querySelector(`[data-error="All"]`).textContent = 'Ошибка сервера'
     }
+}
+
+function checkValues() {
+    let error = false
+    if (queryInp.value.length < queryMin || queryInp.value.length > queryMax) error = true
+    if (queryInp.value.length == 0) {
+        queryInp.classList.add('input-error')
+        error = true
+    }
+    if (contactInp.value.length == 0) {
+        contactInp.classList.add('input-error')
+        error = true
+    }
+    return error
 }
 
 let errorElems = []

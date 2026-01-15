@@ -9,14 +9,13 @@ namespace services.Services
     {
         public async Task<Service?> GetService(int id)
         {
-            Service service = await db.Services.Where(e => e.Id == id).FirstAsync();
-            if (service == null) return null;
+            Service? service = await db.Services.Where(e => e.Id == id).FirstOrDefaultAsync();
             return service;
         }
 
         public async Task<Request?> SaveOrder(string userId, OrderSendDto dto)
         {
-            Service service = await db.Services.Where(e => e.Id == dto.ServiceId).FirstAsync();
+            Service? service = await db.Services.Where(e => e.Id == dto.ServiceId).FirstOrDefaultAsync();
             if (service == null) return null;
 
             Request request = new() {

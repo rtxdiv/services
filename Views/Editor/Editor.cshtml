@@ -1,0 +1,44 @@
+@model services.Models.ViewModels.EditorModel;
+@{
+    Layout = "~/Views/Layouts/ModalLayout.cshtml";
+}
+
+@section Styles {
+    <link href="~/css/editor.css" rel="stylesheet" />
+}
+
+<div class="imgbox" onclick="imgClick()">
+    <img src="~/img/services/@Model.Image" id="image" />
+</div>
+<div class="form">
+
+    <input id="serviceId" value="@Model.ServiceId" readonly />
+
+    <input type="file" id="imageInp" onchange="imgChange()" />
+
+    <div class="error" data-error="All"></div>
+
+    <div class="row">
+        <p>Название</p>
+        <div class="error" data-error="Name"></div>
+        <input placeholder="Название услуги" id="nameInp" value="@Model.Name">
+    </div>
+
+    <div class="row">
+        <p>Описание</p>
+        <div class="error" data-error="Description"></div>
+        <textarea placeholder="Описание услуги на главной странице" id="descriptionInp">@Model.Description</textarea>
+    </div>
+
+    <div class="row">
+        <p>Требования</p>
+        <div class="error" data-error="Requirements"></div>
+        <textarea placeholder="Требования к содержанию описаиня заказа" id="requirementsInp">@Model.Requirements</textarea>
+    </div>
+
+    <button onclick="@(Model.New? "createService()" : "updateService()")">@(Model.New ? "Создать" : "Изменить")</button>
+</div>
+
+@section Scripts {
+    <script src="~/js/editor.js"></script>
+}

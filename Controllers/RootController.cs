@@ -14,7 +14,7 @@ namespace services.Controllers
         {
             HomeModel model = new() {
                 Services = await rootService.GetServices(),
-                Admin = false,
+                Admin = true,
                 Layout = {
                     ShowRequests = true,
                 }
