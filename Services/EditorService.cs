@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using services.Entity;
 using services.Models.DtoModels;
@@ -30,6 +29,30 @@ namespace services.Services
             await db.SaveChangesAsync();
         }
 
+        public async Task<Service?> UpdateService(EditorUpdateDto body)
+        {
+            Service? service = await db.Services.Where(e => e.Id == body.GetServiceId()).FirstOrDefaultAsync();
+            if (service == null) return null;
+
+            string? image = service.Image;
+
+            if (body.Image != null) {
+                if (image != null) {
+                    await RemoveImage(image);
+                }
+                image = await WriteImage(body.Image);
+            }
+
+            service.Name = body.Name;
+            service.Description = body.Description;
+            service.Requirements = body.Requirements;
+            service.Image = image;
+
+            await db.SaveChangesAsync();
+
+            return service;
+        }
+
         private static async Task<string> WriteImage(IFormFile file)
         {
             Random random = new();
@@ -45,6 +68,12 @@ namespace services.Services
             await file.CopyToAsync(stream);
 
             return fileName;
+        }
+
+        private static async Task RemoveImage(string fileName)
+        {
+            string filePath = Path.Join(Directory.GetCurrentDirectory(), "wwwroot", "img", "services", fileName);
+            await Task.Run(() => File.Delete(filePath));
         }
     }
 }

@@ -5,18 +5,27 @@ namespace services.Models.DtoModels
 {
     public class EditorUpdateDto
     {
-        [MaxFileSize(1024 * 1024 * 5)]
+        [Required(ErrorMessage = "Не указан Id услуги")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Некорректный Id услуги")]
+        public required string ServiceId { get; set; }
+
+        [FileExtension(".png", ".jpg", ".jpeg")]
         [FileMimeTypes("image/png", "image/jpeg", "image/jpg")]
-        [FileExtensions(Extensions = "jpg,jpeg,png", ErrorMessage = "Разрешённые типы файлов: .png, .jpg, .jpeg")]
+        [MaxFileSize(1024 * 1024 * 5)]
         public IFormFile? Image { get; set; } = null;
 
+        [Required(ErrorMessage = "Добавьте имя услуги")]
         [MinLength(1, ErrorMessage = "Укажите имя услуги")]
         public required string Name { get; set; }
 
+        [Required(ErrorMessage = "Добавьте описание услуги")]
         [MinLength(1, ErrorMessage = "Укажите описание услуги")]
         public required string Description { get; set; }
 
+        [Required(ErrorMessage = "Добавьте требования услуги")]
         [MinLength(1, ErrorMessage = "Укажите требования услуги")]
         public required string Requirements { get; set; }
+
+        public int GetServiceId() => int.Parse(ServiceId);
     }
 }

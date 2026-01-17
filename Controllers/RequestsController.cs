@@ -42,9 +42,7 @@ namespace services.Controllers
         [HttpPost("/accept")]
         public async Task<IActionResult> AcceptRequest([FromBody] AcceptRequestDto body)
         {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             Request? request = await requestsService.AcceptRequest(body.RequestId);
             if (request == null) return NotFound("Запрос не найден");
@@ -57,9 +55,7 @@ namespace services.Controllers
         [HttpPost("/reject")]
         public async Task<IActionResult> RejectRequest([FromBody] AcceptRequestDto body)
         {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             Request? request = await requestsService.RejectRequest(body.RequestId);
             if (request == null) return NotFound("Запрос не найден");

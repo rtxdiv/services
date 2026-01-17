@@ -30,9 +30,7 @@ namespace services.Controllers
         [HttpPost("/send")]
         public async Task<IActionResult> Send([FromBody] OrderSendDto body)
         {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             Validation validation = await authService.ValidateUser(HttpContext, new VParams { NewId = true });
 

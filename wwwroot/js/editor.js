@@ -4,6 +4,7 @@ const imgbox = document.querySelector('.imgbox')
 const nameInp = document.querySelector('#nameInp')
 const descriptionInp = document.querySelector('#descriptionInp')
 const requirementsInp = document.querySelector('#requirementsInp')
+const serviceId = document.querySelector('#serviceId')
 
 function imgClick() {
     imageInp.click()
@@ -53,10 +54,34 @@ async function createService() {
     }
 }
 
-function updateService() {
+async function updateService() {
     if (checkValues()) return
 
-    console.log('/editService')
+    const formdata = new FormData();
+    formdata.append('Image', imageInp.files[0])
+    formdata.append('Name', nameInp.value)
+    formdata.append('Description', descriptionInp.value)
+    formdata.append('Requirements', requirementsInp.value)
+    formdata.append('ServiceId', serviceId.value)
+
+    const resp = await fetch('/update', {
+        method: 'POST',
+        body: formdata
+    })
+
+    if (resp.redirected) {
+        window.location.href = resp.url
+    }
+
+    if (!resp.ok) {
+        if (resp.status == 400) {
+            const body = await resp.json()
+            return displayErrors(body)
+        }
+        document.querySelector(`[data-error="All"]`).textContent = 'Ошибка сервера'
+    } else {
+        console.log(resp)
+    }
 }
 
 

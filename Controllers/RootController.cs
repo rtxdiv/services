@@ -28,9 +28,7 @@ namespace services.Controllers
         [HttpPost("/changeVisibility")]
         public async Task<IActionResult> ChangeVisibility([FromBody] ChangeVisibilityDto body)
         {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             Service? service = await rootService.ChangeVisibility(body.ServiceId);
             if (service == null) return NotFound("Услуга не найдена");
@@ -41,9 +39,7 @@ namespace services.Controllers
         [HttpPost("/deleteService")]
         public async Task<IActionResult> DeleteService([FromBody] DeleteServiceDto body)
         {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             Service? service = await rootService.DeleteService(body.ServiceId);
             if (service == null) return NotFound("Услуга не найдена");

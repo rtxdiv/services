@@ -8,7 +8,7 @@ namespace services.Models.DtoModels
         [FileExtension(".png", ".jpg", ".jpeg")]
         [FileMimeTypes("image/png", "image/jpeg", "image/jpg")]
         [MaxFileSize(1024 * 1024 * 5)]
-        public IFormFile? Image { get; set; }
+        public IFormFile? Image { get; set; } = null;
 
         [Required(ErrorMessage = "Добавьте имя услуги")]
         [MinLength(1, ErrorMessage = "Укажите имя услуги")]

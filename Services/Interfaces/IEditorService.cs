@@ -7,5 +7,6 @@ namespace services.Services.Interfaces
     {
         Task<Service?> GetService(int id);
         Task CreateService(EditorCreateDto body);
+        Task<Service?> UpdateService(EditorUpdateDto body);
     }
 }

@@ -1,6 +1,5 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic.FileIO;
 using services.Entity;
 using services.Models.DtoModels;
 using services.Models.ViewModels;
@@ -37,11 +36,20 @@ namespace services.Controllers
         [HttpPost("/create")]
         public async Task<IActionResult> Create([FromForm] EditorCreateDto body)
         {
-            if (!ModelState.IsValid) {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             await editorService.CreateService(body);
+
+            return Redirect("/");
+        }
+
+        [HttpPost("/update")]
+        public async Task<IActionResult> Update([FromForm] EditorUpdateDto body)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            Service? service = await editorService.UpdateService(body);
+            if (service == null) return NotFound();
 
             return Redirect("/");
         }
