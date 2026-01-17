@@ -1,0 +1,21 @@
+.createBtn {
+    width: 100%;
+    color: white;
+    outline: none;
+    border: 2px rgb(0, 118, 227) solid;
+    background: linear-gradient(to right top, rgb(0, 94, 255), rgb(23, 143, 255));
+    border-radius: 7px;
+    height: 35px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.createBtn:hover {
+    transform: translateY(-2px);
+}
+.services {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

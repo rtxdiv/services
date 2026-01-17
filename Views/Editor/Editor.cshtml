@@ -8,9 +8,7 @@
 }
 
 <div class="imgbox" onclick="imgClick()">
-    @if (Model.Image != null) {
-        <img src="~/img/services/@Model.Image" id="image" />
-    }
+    <img src="~/img/services/@Model.Image" id="image" class="@(Model.Image == null ? "no-image" : "")" />
 </div>
 
 <div class="error" data-error="Image"></div>

@@ -7,6 +7,9 @@
 !.env
 .env.secret
 
+# SERVICE IMAGES
+wwwroot/img/services/*
+
 # User-specific files
 *.rsuser
 *.suo

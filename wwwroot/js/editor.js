@@ -20,6 +20,7 @@ function imgChange() {
 
         reader.onload = function (e) {
             image.src = e.target.result
+            image.classList.remove('no-image')
         }
         reader.readAsDataURL(file)
     }

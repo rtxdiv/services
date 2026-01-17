@@ -5,42 +5,49 @@
 }
 
 @section Styles {
+	<link href="~/css/root.css" rel="stylesheet" />
 	<link href="~/css/card.css" rel="stylesheet" />
 }
 
-@foreach (Service service in Model.Services) {
-	<div class="@(service.Visible ? "card" : "card unvis-card")">
+@if (Model.Admin == true) {
+	<button class="createBtn" onclick="window.location.href='/editor'">Создать</button>
+}
 
-		<div class="body">
-			@if (service.Image != null) {
-				<div class="imagebox">
-					<img src="/img/services/@service.Image" />
+<div class="services">
+	@foreach (Service service in Model.Services) {
+		<div class="@(service.Visible ? "card" : "card unvis-card")">
+
+			<div class="body">
+				@if (service.Image != null) {
+					<div class="imagebox">
+						<img src="/img/services/@service.Image" />
+					</div>
+				}
+
+				<div class="body-content">
+					<p class="title">@service.Name</p>
+					<p class="text">@service.Description</p>
+
+					@if (Model.Admin == false) {
+						<button onclick="window.location.href='/order/@service.Id'">
+							Заказать
+						</button>
+					}
+				</div>
+
+			</div>
+
+			@if (Model.Admin == true) {
+				<div class="control-admin">
+					<button class="visible" onclick="changeVisibility(this, @service.Id)"><img src="@("/img/" + (service.Visible ? "visible.png" : "unvisible.png"))" /></button>
+					<button class="visible" onclick="window.location.href='/editor/@service.Id'">Изменить</button>
+					<button class="visible removeBtn" onclick="deleteService(this, @service.Id)">Удалить</button>
 				</div>
 			}
 
-			<div class="body-content">
-				<p class="title">@service.Name</p>
-				<p class="text">@service.Description</p>
-
-				@if (Model.Admin == false) {
-					<button onclick="window.location.href='/order/@service.Id'">
-						Заказать
-					</button>
-				}
-			</div>
-
 		</div>
-
-		@if (Model.Admin == true) {
-			<div class="control-admin">
-				<button class="visible" onclick="changeVisibility(this, @service.Id)"><img src="@("/img/" + (service.Visible ? "visible.png" : "unvisible.png"))" /></button>
-				<button class="visible" onclick="window.location.href='/editor/@service.Id'">Изменить</button>
-				<button class="visible removeBtn" onclick="deleteService(this, @service.Id)">Удалить</button>
-			</div>
-		}
-
-	</div>
-}
+	}
+</div>
 
 @section Scripts {
 	<script src="~/js/home.js"></script>
