@@ -12,9 +12,11 @@ namespace services.Controllers
         [HttpGet]
         public async Task<IActionResult> Home()
         {
+            bool isAdmin = true;
+
             HomeModel model = new() {
-                Services = await rootService.GetServices(),
-                Admin = true,
+                Services = await rootService.GetServices(isAdmin),
+                Admin = isAdmin,
                 Layout = {
                     ShowRequests = true,
                 }

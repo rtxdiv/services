@@ -25,27 +25,43 @@ function imgChange() {
 }
 
 async function createService() {
-    if (checkValues(true)) return
+    if (checkValues()) return
 
-    console.log('/createServcie')
+    const formdata = new FormData();
+    formdata.append('Image', imageInp.files[0])
+    formdata.append('Name', nameInp.value)
+    formdata.append('Description', descriptionInp.value)
+    formdata.append('Requirements', requirementsInp.value)
+
+    const resp = await fetch('/create', {
+        method: 'POST',
+        body: formdata
+    })
+
+    if (resp.redirected) {
+        window.location.href = resp.url
+    }
+
+    if (!resp.ok) {
+        if (resp.status == 400) {
+            const body = await resp.json()
+            return displayErrors(body)
+        }
+        document.querySelector(`[data-error="All"]`).textContent = 'Ошибка сервера'
+    } else {
+        console.log(resp)
+    }
 }
 
 function updateService() {
-    if (checkValues(false)) return
+    if (checkValues()) return
 
     console.log('/editService')
 }
 
 
-function checkValues(checkImage = true) {
+function checkValues() {
     let error = false
-
-    if (checkImage) {
-        if (imageInp.files.length == 0) {
-            imgbox.classList.add('image-error')
-            error = true
-        }
-    }
 
     if (nameInp.value.length == 0) {
         nameInp.classList.add('input-error')
@@ -60,4 +76,19 @@ function checkValues(checkImage = true) {
         error = true
     }
     return error
+}
+
+let errorElems = []
+function displayErrors(errors) {
+    errorElems.forEach(elem => {
+        elem.textContent = ''
+    })
+    errorElems = []
+    Object.entries(errors).forEach(([key, value]) => {
+        const elem = document.querySelector(`[data-error="${key}"]`)
+        if (elem) {
+            errorElems.push(elem)
+            elem.textContent = value[0]
+        }
+    })
 }

@@ -1,5 +1,7 @@
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using services.Entity;
+using services.Models.DtoModels;
 using services.Services.Interfaces;
 
 namespace services.Services
@@ -10,6 +12,39 @@ namespace services.Services
         {
             Service? service = await db.Services.Where(e => e.Id == id).FirstOrDefaultAsync();
             return service;
+        }
+
+        public async Task CreateService(EditorCreateDto body)
+        {
+            string? image = null;
+            if (body.Image != null) image = await WriteImage(body.Image);
+
+            db.Services.Add(new Service
+            {
+                Name = body.Name,
+                Description = body.Description,
+                Requirements = body.Requirements,
+                Image = image
+            });
+
+            await db.SaveChangesAsync();
+        }
+
+        private static async Task<string> WriteImage(IFormFile file)
+        {
+            Random random = new();
+
+            string fileName = DateTime.Now.ToString("dd.MM.yy-HH.mm.ss-") + random.Next(1000).ToString("D3") + Path.GetExtension(file.FileName);
+
+            string folder = Path.Join(Directory.GetCurrentDirectory(), "wwwroot", "img", "services");
+            Directory.CreateDirectory(folder);
+
+            string filePath = Path.Join(folder, fileName);
+
+            using Stream stream = new FileStream(filePath, FileMode.Create);
+            await file.CopyToAsync(stream);
+
+            return fileName;
         }
     }
 }

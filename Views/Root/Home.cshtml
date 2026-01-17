@@ -12,10 +12,11 @@
 	<div class="@(service.Visible ? "card" : "card unvis-card")">
 
 		<div class="body">
-
-			<div class="imagebox">
-				<img src="/img/services/@service.Image" />
-			</div>
+			@if (service.Image != null) {
+				<div class="imagebox">
+					<img src="/img/services/@service.Image" />
+				</div>
+			}
 
 			<div class="body-content">
 				<p class="title">@service.Name</p>

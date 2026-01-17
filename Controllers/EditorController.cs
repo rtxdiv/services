@@ -1,5 +1,8 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic.FileIO;
 using services.Entity;
+using services.Models.DtoModels;
 using services.Models.ViewModels;
 using services.Services.Interfaces;
 
@@ -29,6 +32,18 @@ namespace services.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost("/create")]
+        public async Task<IActionResult> Create([FromForm] EditorCreateDto body)
+        {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
+            await editorService.CreateService(body);
+
+            return Redirect("/");
         }
     }
 }
