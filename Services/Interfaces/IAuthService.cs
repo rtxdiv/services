@@ -5,6 +5,8 @@ namespace services.Services.Interfaces
     public interface IAuthService
     {
         Task<Validation> ValidateUser(HttpContext context, [Optional] VParams vparams);
+        string Hash(string row);
+        bool VerifyHash(string hash);
     }
 
     public class Validation

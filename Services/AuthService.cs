@@ -5,8 +5,22 @@ using services.Services.Interfaces;
 
 namespace services.Services
 {
-    class AuthService(AppDbContext db) : IAuthService
+    class AuthService(AppDbContext db, string adminKey) : IAuthService
     {
+        public bool VerifyHash(string hashedKey)
+        {
+            try {
+                return BCrypt.Net.BCrypt.Verify(adminKey, hashedKey);
+            } catch {
+                return false;
+            }
+        }
+
+        public string Hash(string row)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(row);
+        }
+
         public async Task<Validation> ValidateUser(HttpContext context, [Optional] VParams vparams)
         {
             bool valide = true;

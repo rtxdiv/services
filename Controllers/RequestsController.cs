@@ -20,6 +20,7 @@ namespace services.Controllers
             if (!(status == "accepted" || status == "rejected" || status == "waiting" || status == "all")) {
                 return Redirect("/requests/all");
             }
+
             bool isAdmin = true;
             List<Request> requests = [];
 
