@@ -3,6 +3,7 @@ using services.Services;
 using services.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnv;
+using services.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,12 +18,17 @@ if (string.IsNullOrEmpty(adminKey)) {
     throw new InvalidOperationException("Set ADMIN_KEY={value} in .env.secret");
 }
 
-// сервисы
+// регистрация сервисов
 builder.Services.AddScoped<IRootService, RootService>();
 builder.Services.AddScoped<IRequestsService, RequestsService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEditorService, EditorService>();
 
+// регистрация сервисов-фильтов
+builder.Services.AddScoped<RequireAdminFilter>();
+builder.Services.AddScoped<CheckAdminFilter>();
+
+// внедрение конфигурации в сервис
 builder.Services.AddScoped<IAuthService>(provider => {
     AppDbContext context = provider.GetRequiredService<AppDbContext>();
     return new AuthService(context, adminKey);
@@ -35,10 +41,6 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Root}/{action=Home}"
-);
+app.MapControllers();
 
 app.Run();

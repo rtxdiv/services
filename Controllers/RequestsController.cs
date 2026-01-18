@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using services.ActionFilters;
 using services.Entity;
 using services.Models.DtoModels;
 using services.Models.ViewModels;
@@ -10,18 +11,18 @@ namespace services.Controllers
     public class RequestsController(
         IRequestsService requestsService,
         IAuthService authService
-
     ) : Controller
     {
         [HttpGet]
         [HttpGet("{status}")]
+        [ServiceFilter(typeof(CheckAdminFilter))]
         public async Task<IActionResult> Requests(string status)
         {
             if (!(status == "accepted" || status == "rejected" || status == "waiting" || status == "all")) {
                 return Redirect("/requests/all");
             }
 
-            bool isAdmin = true;
+            bool isAdmin = HttpContext.Items["admin"] as bool? ?? false;
             List<Request> requests = [];
 
             Validation validation = await authService.ValidateUser(HttpContext);
@@ -41,6 +42,7 @@ namespace services.Controllers
         }
 
         [HttpPost("/accept")]
+        [ServiceFilter(typeof(RequireAdminFilter))]
         public async Task<IActionResult> AcceptRequest([FromBody] AcceptRequestDto body)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -54,6 +56,7 @@ namespace services.Controllers
         }
 
         [HttpPost("/reject")]
+        [ServiceFilter(typeof(RequireAdminFilter))]
         public async Task<IActionResult> RejectRequest([FromBody] AcceptRequestDto body)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

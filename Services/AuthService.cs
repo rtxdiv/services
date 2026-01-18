@@ -21,7 +21,12 @@ namespace services.Services
             return BCrypt.Net.BCrypt.HashPassword(row);
         }
 
-        public async Task<Validation> ValidateUser(HttpContext context, [Optional] VParams vparams)
+        public bool VerifyKey(string key)
+        {
+            return key == adminKey;
+        }
+
+        public async Task<Validation> ValidateUser(HttpContext context, [Optional] VParams vparams) 
         {
             bool valide = true;
             string? userId;
@@ -33,7 +38,10 @@ namespace services.Services
                 requestsCount = await db.Requests.Where(e => e.UserId == userId).CountAsync();
                 if (requestsCount == 0) throw new NotValidException();
 
-                context.Response.Cookies.Append("user_id", userId, new CookieOptions { Expires = DateTime.Now.AddDays(100), HttpOnly = true });
+                context.Response.Cookies.Append("user_id", userId, new CookieOptions {
+                    Expires = DateTime.Now.AddDays(100),
+                    HttpOnly = true
+                });
             }
             catch (NotValidException) {
 
@@ -41,7 +49,10 @@ namespace services.Services
 
                 if (vparams?.NewId == true) {
                     userId = Guid.NewGuid().ToString();
-                    context.Response.Cookies.Append("user_id", userId, new CookieOptions { Expires = DateTime.Now.AddDays(100), HttpOnly = true });
+                    context.Response.Cookies.Append("user_id", userId, new CookieOptions {
+                        Expires = DateTime.Now.AddDays(100),
+                        HttpOnly = true
+                    });
 
                 } else {
                     userId = null;

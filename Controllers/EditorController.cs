@@ -1,5 +1,5 @@
-using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using services.ActionFilters;
 using services.Entity;
 using services.Models.DtoModels;
 using services.Models.ViewModels;
@@ -12,6 +12,7 @@ namespace services.Controllers
     {
         [HttpGet]
         [HttpGet("{id:int}")]
+        [ServiceFilter(typeof(RequireAdminFilter))]
         public async Task<IActionResult> Editor(int id = -1)
         {
             EditorModel model = new();

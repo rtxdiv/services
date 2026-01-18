@@ -1,6 +1,6 @@
 namespace services.Models.ViewModels
 {
-    public abstract class BaseLayoutModel
+    public class BaseLayoutModel
     {
         public LayoutData Layout { get; set; } = new();
     }

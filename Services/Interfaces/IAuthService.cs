@@ -7,6 +7,7 @@ namespace services.Services.Interfaces
         Task<Validation> ValidateUser(HttpContext context, [Optional] VParams vparams);
         string Hash(string row);
         bool VerifyHash(string hash);
+        bool VerifyKey(string key);
     }
 
     public class Validation
