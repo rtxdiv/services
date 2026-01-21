@@ -1,4 +1,16 @@
-async function trykey() {
+const authForm = document.querySelector('#authForm')
+const keyInp = document.querySelector('#keyInp')
+const error = document.querySelector('.error')
+
+authForm.addEventListener('submit', trykey)
+
+async function trykey(event) {
+    event.preventDefault()
+
+    if (!keyInp.value) {
+        error.textContent = 'Введите ключ'
+        return
+    }
 
     const resp = await fetch('/trykey', {
         method: 'POST',
@@ -15,7 +27,7 @@ async function trykey() {
     }
 
     if (!resp.ok) {
-        if (resp.status == 400) console.log('Введите ключ')
-        if (resp.status == 404) console.log('Неверный ключ')
+        if (resp.status == 400) error.textContent = 'Введите ключ'
+        if (resp.status == 404) error.textContent = 'Неверный ключ'
     }
 }

@@ -1,0 +1,48 @@
+.title {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+#authForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+
+    .error {
+        color: red;
+        font-size: 15px;
+        margin-bottom: 10px;
+        height: 15px;
+        line-height: 15px;
+    }
+
+    #keyInp, button {
+        box-sizing: border-box;
+        outline: none;
+        border-radius: 7px;
+        width: 100%;
+        resize: none;
+        border: 1px rgb(50, 50, 50) solid;
+        font-size: 16px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    #keyInp {
+        height: 40px;
+        padding: 10px;
+        background: rgb(245, 245, 245);
+    }
+    button {
+        height: 37px;
+        background: linear-gradient(to right top, rgb(0, 94, 255), rgb(23, 143, 255));
+        color: white;
+        border: 2px rgb(0, 118, 227) solid;
+        cursor: pointer;
+    }
+
+    #keyInp:focus {
+        border: 2px rgb(42, 73, 105) solid;
+    }
+}

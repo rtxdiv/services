@@ -9,5 +9,6 @@ namespace services.Models.ViewModels
     {
         public bool ShowRequests { get; set; } = false;
         public bool ShowNotification { get; set; } = false;
+        public bool Admin { get; set; } = false;
     }
 }

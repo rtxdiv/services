@@ -2,8 +2,19 @@
     Layout = "~/Views/Layouts/BaseLayout.cshtml";
 }
 
-<input type="text" id="keyInp" />
-<button onclick="trykey()">Войти</button>
+@section Styles {
+    <link href="~/css/auth.css" rel="stylesheet" />
+}
+
+<div class="title">
+    Enter admin key
+</div>
+
+<form id="authForm">
+    <div class="error"></div>
+    <input type="password" id="keyInp" placeholder="Key" />
+    <button type="submit">Войти</button>
+</form>
 
 @section Scripts {
     <script src="~/js/auth.js"></script>

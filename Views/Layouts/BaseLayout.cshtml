@@ -19,7 +19,12 @@
             @if (Model.Layout.ShowRequests == true) {
 
                 <div class="requests" onclick="window.location.href='/requests'">
-                    <div class="button">Мои заказы</div>
+                    @if (Model.Layout.Admin == true) {
+                        <div class="button">Заявки</div>
+                    } else {
+                        <div class="button">Мои заявки</div>
+                    }
+
                     @if (Model.Layout.ShowNotification == true) {
                         <div class="notification">UPD</div>
                     }

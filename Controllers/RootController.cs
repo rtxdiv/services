@@ -20,7 +20,8 @@ namespace services.Controllers
                 Services = await rootService.GetServices(isAdmin),
                 Admin = isAdmin,
                 Layout = {
-                    ShowRequests = true,
+                    Admin = isAdmin,
+                    ShowRequests = true
                 }
             };
 
