@@ -21,7 +21,8 @@ namespace services.Controllers
                 Admin = isAdmin,
                 Layout = {
                     Admin = isAdmin,
-                    ShowRequests = true
+                    ShowRequests = true,
+                    ShowNotification = await rootService.CountNoti(isAdmin, HttpContext) > 0
                 }
             };
 

@@ -26,17 +26,17 @@ namespace services.Services
             return key == adminKey;
         }
 
-        public async Task<Validation> ValidateUser(HttpContext context, [Optional] VParams vparams) 
+        public async Task<Validation> ValidateUser(HttpContext context, [Optional] VParams vparams)
         {
             bool valide = true;
             string? userId;
-            int requestsCount = 0;
+            List<Request> requests;
 
             try {
 
                 userId = context.Request.Cookies["user_id"] ?? throw new NotValidException();
-                requestsCount = await db.Requests.Where(e => e.UserId == userId).CountAsync();
-                if (requestsCount == 0) throw new NotValidException();
+                requests = await db.Requests.Where(e => e.UserId == userId).ToListAsync();
+                if (requests.Count == 0) throw new NotValidException();
 
                 context.Response.Cookies.Append("user_id", userId, new CookieOptions {
                     Expires = DateTime.Now.AddDays(100),
@@ -46,6 +46,7 @@ namespace services.Services
             catch (NotValidException) {
 
                 valide = false;
+                requests = [];
 
                 if (vparams?.NewId == true) {
                     userId = Guid.NewGuid().ToString();
@@ -63,7 +64,8 @@ namespace services.Services
             return new Validation {
                 Valide = valide,
                 UserId = userId,
-                RequestsCount = requestsCount
+                RequestsCount = requests.Count,
+                NotiCount = requests.Count(e => e.UserNoti)
             };
         }
     }

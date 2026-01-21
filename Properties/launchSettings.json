@@ -1,6 +1,12 @@
 ﻿{
   "profiles": {
-    "http": {
+    "Development": {
+      "commandName": "Project",
+      "dotnetRunMessages": false,
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:3000"
+    },
+    "Lan": {
       "commandName": "Project",
       "dotnetRunMessages": false,
       "launchBrowser": false,

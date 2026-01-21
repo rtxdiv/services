@@ -1,11 +1,10 @@
 using services.Entity;
 using services.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic.FileIO;
 
 namespace services.Services
 {
-    public class RootService(AppDbContext db) : IRootService
+    public class RootService(AppDbContext db, IAuthService authService) : IRootService
     {
         public async Task<List<Service>> GetServices(bool isAdmin)
         {
@@ -36,6 +35,18 @@ namespace services.Services
             if (service.Image != null) await RemoveImage(service.Image);
 
             return service;
+        }
+
+        public async Task<int> CountNoti(bool isAdmin, HttpContext context)
+        {
+            if (isAdmin) {
+                return await db.Requests.Where(e => e.AdminNoti).CountAsync();
+
+            } else {
+                Validation validation = await authService.ValidateUser(context);
+                if (validation.Valide) return validation.NotiCount;
+            }
+            return 0;
         }
 
         private static async Task RemoveImage(string fileName)

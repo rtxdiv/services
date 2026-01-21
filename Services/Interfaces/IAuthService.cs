@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using services.Entity;
 
 namespace services.Services.Interfaces
 {
@@ -15,6 +16,7 @@ namespace services.Services.Interfaces
         public required bool Valide { get; set; }
         public required string? UserId { get; set; }
         public required int RequestsCount { get; set; }
+        public int NotiCount { get; set; } = 0;
     }
     public class VParams
     {
