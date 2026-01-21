@@ -13,7 +13,6 @@
     <img class="norequests" src="~/img/norequests.png" />
 
 } else {
-
     <div class="sort">
         <a href="/requests/all" class="@(Model.Status == "all" ? "active" : null)">Все (@Model.Requests.Count())</a>
         <a href="/requests/waiting" class="@(Model.Status == "waiting" ? "active" : null)">Ожадание ответа (@Model.Requests.Count(r => r.Status == null))</a>
@@ -28,6 +27,17 @@
     Model.Status == "rejected" ? r.Status == false : true
 )) {
     <div class="card">
+
+        @if (Model.Admin) {
+            @if (request.AdminNoti) {
+                <div class="notification"></div>
+            }
+            
+        } else {
+            @if (request.UserNoti) {
+                <div class="notification"></div>
+            }
+        }
 
         <div class="body">
 

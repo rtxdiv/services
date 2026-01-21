@@ -1,6 +1,7 @@
 using services.Entity;
 using services.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace services.Services
 {
@@ -8,11 +9,30 @@ namespace services.Services
     {
         public async Task<List<Request>> GetRequests(string? userId, bool isAdmin)
         {
+            List<Request> requests;
             if (isAdmin) {
-                return await db.Requests.OrderByDescending(e => e.CreatedAt).ToListAsync();
+                requests = await db.Requests.OrderByDescending(e => e.CreatedAt).ToListAsync();
             } else {
-                return await db.Requests.Where(e => e.UserId == userId).ToListAsync();
+                requests = await db.Requests.Where(e => e.UserId == userId).ToListAsync();
             }
+
+            List<Request>? requestsCopy = JsonSerializer.Deserialize<List<Request>>(
+                JsonSerializer.Serialize(requests)
+            );
+
+            if (isAdmin) {
+                foreach (Request request in requests) {
+                    if (request.AdminNoti) request.AdminNoti = false;
+                }
+
+            } else {
+                foreach (Request request in requests) {
+                    if (request.UserNoti) request.UserNoti = false;
+                }
+            }
+            await db.SaveChangesAsync();
+
+            return requestsCopy ?? [];
         }
 
         public async Task<Request?> AcceptRequest(int requestId)
@@ -22,6 +42,7 @@ namespace services.Services
 
             request.Status = true;
             request.StatusText = "Одобрено";
+            request.UserNoti = true;
             await db.SaveChangesAsync();
             return request;
         }
@@ -33,6 +54,7 @@ namespace services.Services
 
             request.Status = false;
             request.StatusText = "Отклонено";
+            request.UserNoti = true;
             await db.SaveChangesAsync();
             return request;
         }
